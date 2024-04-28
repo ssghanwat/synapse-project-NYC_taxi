@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_61j",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "demo.parquet",
+				"fileSystem": "demo"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	}
+}
