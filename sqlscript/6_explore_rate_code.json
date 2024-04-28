@@ -1,12 +1,12 @@
 {
 	"name": "6_explore_rate_code",
 	"properties": {
-		"description": "classic json",
+		"description": "classic json\nmultiline json",
 		"folder": {
 			"name": "nyc_taxi/discovery"
 		},
 		"content": {
-			"query": "--select database \nuse nyc_taxi_discovery\n\n\n--query file\nSELECT  rate_code_id, rate_code_desc\nFROM \n    OPENROWSET(\n        BULK 'rate_code.json',\n        DATA_SOURCE = 'nyc_taxi_data_raw',\n        FIELDTERMINATOR = '0x0b',\n        ROWTERMINATOR = '0x0b',\n        FIELDQUOTE = '0x0b',\n        FORMAT = 'csv'\n    )\n    WITH(\n        jsonDoc NVARCHAR(MAX)\n    )as payment_type\n    CROSS APPLY OPENJSON(jsonDoc)\n    WITH(\n        rate_code_id TINYINT,\n        rate_code_desc VARCHAR(20) '$.rate_code'\n    );\n\n\n\n",
+			"query": "--select database \nuse nyc_taxi_discovery\n\n\n--query file\nSELECT  rate_code_id, rate_code_desc\nFROM \n    OPENROWSET(\n        BULK 'rate_code.json',\n        DATA_SOURCE = 'nyc_taxi_data_raw',\n        FIELDTERMINATOR = '0x0b',\n        ROWTERMINATOR = '0x0b',\n        FIELDQUOTE = '0x0b',\n        FORMAT = 'csv'\n    )\n    WITH(\n        jsonDoc NVARCHAR(MAX)\n    )as payment_type\n    CROSS APPLY OPENJSON(jsonDoc)\n    WITH(\n        rate_code_id TINYINT,\n        rate_code_desc VARCHAR(20) '$.rate_code'\n    );\n\n\n----------------------------------------------------------------\n--process multline json\n----------------------------------------------------------------\n\nSELECT  rate_code_id, rate_code_desc\nFROM \n    OPENROWSET(\n        BULK 'rate_code_multi_line.json',\n        DATA_SOURCE = 'nyc_taxi_data_raw',\n        FIELDTERMINATOR = '0x0b',\n        ROWTERMINATOR = '0x0b',\n        FIELDQUOTE = '0x0b',\n        FORMAT = 'csv'\n    )\n    WITH(\n        jsonDoc NVARCHAR(MAX)\n    )as payment_type\n    CROSS APPLY OPENJSON(jsonDoc)\n    WITH(\n        rate_code_id TINYINT,\n        rate_code_desc VARCHAR(20) '$.rate_code'\n    );\n",
 			"metadata": {
 				"language": "sql"
 			},
