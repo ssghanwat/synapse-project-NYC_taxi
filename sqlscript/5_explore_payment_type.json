@@ -1,6 +1,7 @@
 {
 	"name": "5_explore_payment_type",
 	"properties": {
+		"description": "JSON_VALUE function",
 		"folder": {
 			"name": "nyc_taxi/discovery"
 		},
