@@ -5,12 +5,12 @@
 			"name": "nyc_taxi/discovery"
 		},
 		"content": {
-			"query": "",
+			"query": "--use nyc_taxi_discovery;\n\nSELECT TOP 100 *\nFROM \n    OPENROWSET(\n        BULK 'vendor_unquoted.csv',\n        DATA_SOURCE = 'nyc_taxi_data_raw',\n        HEADER_ROW = TRUE,\n        FORMAT = 'csv',\n        PARSER_VERSION = '2.0'\n    )as vendor;\n\n\nSELECT TOP 100 *\nFROM \n    OPENROWSET(\n        BULK 'vendor_escaped.csv',\n        DATA_SOURCE = 'nyc_taxi_data_raw',\n        HEADER_ROW = TRUE,\n        ESCAPeCHAR = '\\\\',\n        FORMAT = 'csv',\n        PARSER_VERSION = '2.0'\n    )as vendor;\n\n\nSELECT TOP 100 *\nFROM \n    OPENROWSET(\n        BULK 'vendor.csv',\n        DATA_SOURCE = 'nyc_taxi_data_raw',\n        HEADER_ROW = TRUE,\n        FIELDQUOTE = '\"',\n        FORMAT = 'csv',\n        PARSER_VERSION = '2.0'\n    )as vendor;",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "master",
+				"databaseName": "nyc_taxi_discovery",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
