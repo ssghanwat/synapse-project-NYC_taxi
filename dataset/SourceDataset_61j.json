@@ -1,0 +1,74 @@
+{
+	"name": "SourceDataset_61j",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "part-00000-cc587b87-0696-454d-a17f-b89524a8cf17-c000.snappy.parquet",
+				"folderPath": "gold/Race_Result/240422",
+				"container": "adfformulaone"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": [
+			{
+				"name": "season",
+				"type": "UTF8"
+			},
+			{
+				"name": "race_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "race_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "location",
+				"type": "UTF8"
+			},
+			{
+				"name": "driver_nationality",
+				"type": "UTF8"
+			},
+			{
+				"name": "driver_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "driver_no",
+				"type": "UTF8"
+			},
+			{
+				"name": "team_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "grid",
+				"type": "UTF8"
+			},
+			{
+				"name": "fast_lap",
+				"type": "UTF8"
+			},
+			{
+				"name": "race_time",
+				"type": "UTF8"
+			},
+			{
+				"name": "points",
+				"type": "UTF8"
+			},
+			{
+				"name": "result_position",
+				"type": "UTF8"
+			}
+		]
+	}
+}
