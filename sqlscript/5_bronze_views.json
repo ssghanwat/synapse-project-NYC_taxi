@@ -1,6 +1,7 @@
 {
 	"name": "5_bronze_views",
 	"properties": {
+		"description": "This SQL Script contains creation of views on json file",
 		"folder": {
 			"name": "nyc_taxi/ldw"
 		},
