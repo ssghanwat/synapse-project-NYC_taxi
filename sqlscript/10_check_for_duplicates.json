@@ -1,0 +1,21 @@
+{
+	"name": "10_check_for_duplicates",
+	"properties": {
+		"description": "Sql Script to fin duplicates records in taxi_zone dataset",
+		"folder": {
+			"name": "nyc_taxi/discovery"
+		},
+		"content": {
+			"query": "--select database\nuse nyc_taxi_discovery\n\n--check for duplicates in the Taxi zone data\n SELECT\n    Location_id,\n    COUNT(1) as number_of_records\nFROM\n    OPENROWSET(\n        BULK 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/raw/taxi_zone.csv',\n        FORMAT = 'CSV',\n        --HEADER_ROW = TRUE,\n        FIRSTROW = 2,\n        FIELDTERMINATOR = ',',\n        ROWTERMINATOR = '\\n',\n        PARSER_VERSION = '2.0'\n    )\n    WITH(\n        Location_id SMALLINT 1,\n        borough VARCHAR(15) 2,\n        zone VARCHAR(50) 3,\n        service_zone VARCHAR(15) 4\n    ) AS [result]\nGROUP BY Location_id\nHAVING COUNT(1) > 1;\n\n\n SELECT\n    borough,\n    COUNT(1) as number_of_records\nFROM\n    OPENROWSET(\n        BULK 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/raw/taxi_zone.csv',\n        FORMAT = 'CSV',\n        --HEADER_ROW = TRUE,\n        FIRSTROW = 2,\n        FIELDTERMINATOR = ',',\n        ROWTERMINATOR = '\\n',\n        PARSER_VERSION = '2.0'\n    )\n    WITH(\n        Location_id SMALLINT 1,\n        borough VARCHAR(15) 2,\n        zone VARCHAR(50) 3,\n        service_zone VARCHAR(15) 4\n    ) AS [result]\nGROUP BY borough\nHAVING COUNT(1) > 1;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
