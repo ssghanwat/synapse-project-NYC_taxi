@@ -1,11 +1,12 @@
 {
 	"name": "5_bronze_views",
 	"properties": {
+		"description": "This SQL Script contains creation of views on json file",
 		"folder": {
 			"name": "nyc_taxi/ldw"
 		},
 		"content": {
-			"query": "use nyc_taxi_ldw\nGO\n\nDROP VIEW IF EXISTS bronze.vw_rate_code\nGO\n\nCREATE VIEW bronze.vw_rate_code\nAS\nSELECT  rate_code_id, rate_code_desc\nFROM \n    OPENROWSET(\n        BULK 'raw/rate_code.json',\n        DATA_SOURCE = 'nyc_taxi_src',\n        FIELDTERMINATOR = '0x0b',\n        ROWTERMINATOR = '0x0b',\n        FIELDQUOTE = '0x0b',\n        FORMAT = 'csv'\n    )\n    WITH(\n        jsonDoc NVARCHAR(MAX)\n    )as payment_type\n    CROSS APPLY OPENJSON(jsonDoc)\n    WITH(\n        rate_code_id TINYINT,\n        rate_code_desc VARCHAR(20) '$.rate_code'\n    );\nGO\n\nSELECT * FROM bronze.vw_rate_code\nGO",
+			"query": "use nyc_taxi_ldw\nGO\n\nDROP VIEW IF EXISTS bronze.vw_rate_code\nGO\n\n--create view for  rate_code.json\nCREATE VIEW bronze.vw_rate_code\nAS\nSELECT  rate_code_id, rate_code_desc\nFROM \n    OPENROWSET(\n        BULK 'raw/rate_code.json',\n        DATA_SOURCE = 'nyc_taxi_src',\n        FIELDTERMINATOR = '0x0b',\n        ROWTERMINATOR = '0x0b',\n        FIELDQUOTE = '0x0b',\n        FORMAT = 'csv'\n    )\n    WITH(\n        jsonDoc NVARCHAR(MAX)\n    )as payment_type\n    CROSS APPLY OPENJSON(jsonDoc)\n    WITH(\n        rate_code_id TINYINT,\n        rate_code_desc VARCHAR(20) '$.rate_code'\n    );\nGO\n\nSELECT * FROM bronze.vw_rate_code\nGO\n\n\n--=================================================================================================\n--create view for payment_type.json\nDROP VIEW IF EXISTS bronze.vw_payment_type\nGO\n\nCREATE VIEW bronze.vw_payment_type\nAS\nSELECT payment_type, description\nFROM \n    OPENROWSET(\n        BULK 'raw/payment_type.json',\n        DATA_SOURCE = 'nyc_taxi_src',\n        FIELDTERMINATOR = '0x0b',\n        FIELDQUOTE = '0x0b',\n        FORMAT = 'csv'\n    )\n    WITH(\n        jsonDoc NVARCHAR(MAX)\n    )as payment_type\n    CROSS APPLY OPENJSON(jsonDoc)\n    WITH(\n        payment_type SMALLINT,\n        description VARCHAR(20) '$.payment_type_desc'\n    )\nGO\n\nSELECT TOP(20) * FROM bronze.vw_payment_type",
 			"metadata": {
 				"language": "sql"
 			},
