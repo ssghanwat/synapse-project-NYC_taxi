@@ -1,0 +1,20 @@
+{
+	"name": "14_discovery_assignment",
+	"properties": {
+		"folder": {
+			"name": "nyc_taxi/discovery"
+		},
+		"content": {
+			"query": "--select database\nUSE nyc_taxi_discovery\n\n/* identify the percentage of cash and credit card trips by borough \nExample data as below:\n\n |====================================================================================================================|\n |   borough     total_trips     cash_trips      card_trips      cash_trips_percentage       card_trips_perceentage   |\n |====================================================================================================================|\n |  Bronx         2019            751              1268             37.20                         62.80               |\n |  Broklyn       6435            2192             4243             34.06                         65.94               |\n |====================================================================================================================|\n*/\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
