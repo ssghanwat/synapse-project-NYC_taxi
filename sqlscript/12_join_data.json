@@ -1,0 +1,21 @@
+{
+	"name": "12_join_data",
+	"properties": {
+		"description": "SQL Script to join two files - taxi_zone and trip_data_green_parquet to get number of trips",
+		"folder": {
+			"name": "nyc_taxi/discovery"
+		},
+		"content": {
+			"query": "--select database\nUSE nyc_taxi_discovery\n\n--identify number of trips made for each borough\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n            BULK 'trip_data_green_parquet/year=2020/month=01/',\n            DATA_SOURCE = 'nyc_taxi_data_raw',\n            FORMAT = 'PARQUET'\n        ) AS [result]\nWHERE PULocationID IS NULL\n\nSELECT taxi_zone.borough, COUNT(1) as number_of_trips\n    FROM OPENROWSET(\n                    BULK 'trip_data_green_parquet/year=2020/month=01/',\n                    DATA_SOURCE = 'nyc_taxi_data_raw',\n                    FORMAT = 'PARQUET'\n                ) AS [trip_data]\n        JOIN\n        OPENROWSET(\n                    BULK 'taxi_zone.csv',\n                    DATA_SOURCE = 'nyc_taxi_data_raw',\n                    FORMAT = 'CSV',\n                    PARSER_VERSION = '2.0',\n                    FIRSTROW = 2\n                )\n                WITH(\n                    Location_id SMALLINT 1,\n                    borough VARCHAR(15) 2,\n                    zone VARCHAR(50) 3,\n                    service_zone VARCHAR(15) 4\n                ) AS [taxi_zone]\n        ON [trip_data].PULocationID = [taxi_zone].location_id\nGROUP by [taxi_zone].borough\n-- ORDER by [taxi_zone].borough\nORDER by number_of_trips;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "nyc_taxi_discovery",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
