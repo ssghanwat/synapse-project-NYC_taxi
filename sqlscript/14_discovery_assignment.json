@@ -1,6 +1,7 @@
 {
 	"name": "14_discovery_assignment",
 	"properties": {
+		"description": "Assignment task solved",
 		"folder": {
 			"name": "nyc_taxi/discovery"
 		},
