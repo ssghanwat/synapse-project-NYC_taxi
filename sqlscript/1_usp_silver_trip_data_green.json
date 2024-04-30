@@ -1,6 +1,7 @@
 {
 	"name": "1_usp_silver_trip_data_green",
 	"properties": {
+		"description": "usp - user_defined stored procedure",
 		"folder": {
 			"name": "nyc_taxi/user_defined_stored_procedure"
 		},
