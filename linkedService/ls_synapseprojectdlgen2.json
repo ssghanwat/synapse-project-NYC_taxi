@@ -1,0 +1,10 @@
+{
+	"name": "ls_synapseprojectdlgen2",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://synapseprojectdlgen2.dfs.core.windows.net/"
+		}
+	}
+}
