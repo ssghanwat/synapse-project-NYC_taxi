@@ -80,14 +80,6 @@
 			}
 		],
 		"variables": {
-			"var_folder_path": {
-				"type": "String",
-				"defaultValue": "silver/taxi_zone"
-			},
-			"v_usp_name": {
-				"type": "String",
-				"defaultValue": "silver.usp_create_silver_taxi_zone"
-			},
 			"v_folder_path_usp_name": {
 				"type": "Array",
 				"defaultValue": [
