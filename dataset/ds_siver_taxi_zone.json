@@ -5,6 +5,9 @@
 			"referenceName": "ls_synapseprojectdlgen2",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "demo"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
