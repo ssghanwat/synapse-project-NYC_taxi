@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "act_get_year_and_month",
+				"name": "act_get_month_year",
 				"type": "Script",
 				"dependsOn": [],
 				"policy": {
@@ -22,18 +22,18 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "use nyc_taxi_ldw;\n\nSELECT DISTINCT\n            year,\n            month\nFROM bronze.vw_trip_data_green_csv;"
+							"text": "select distinct year, month from bronze.vw_trip_data_green_csv"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
 			},
 			{
-				"name": "act_ForEach_year_and_month",
+				"name": "act ForEach year mont",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "act_get_year_and_month",
+						"activity": "act_get_month_year",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,13 +42,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('act_get_year_and_month').output.resultSets[0].rows",
+						"value": "@activity('act_get_month_year').output.resultSets[0].Rows",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
+					"batchCount": 10,
 					"activities": [
 						{
-							"name": "Delete1",
+							"name": "act delete year month",
 							"type": "Delete",
 							"dependsOn": [],
 							"policy": {
@@ -65,7 +66,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"ds_param_folder_path": {
-											"value": "'silver/trip_data_green/year =@{item().year}/month =@{item().month}'",
+											"value": "@string('silver')",
 											"type": "Expression"
 										}
 									}
@@ -77,53 +78,11 @@
 									"enablePartitionDiscovery": false
 								}
 							}
-						},
-						{
-							"name": "Stored procedure",
-							"type": "SqlServerStoredProcedure",
-							"dependsOn": [
-								{
-									"activity": "Delete1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"storedProcedureName": "[silver].[usp_silver_trip_data_green]",
-								"storedProcedureParameters": {
-									"month": {
-										"value": "",
-										"type": "String"
-									},
-									"year": {
-										"value": "",
-										"type": "String"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "ls_serverless_sql_pool_nyc_taxi_ldw",
-								"type": "LinkedServiceReference"
-							}
 						}
 					]
 				}
 			}
 		],
-		"variables": {
-			"file_year_month": {
-				"type": "Array"
-			}
-		},
 		"annotations": []
 	}
 }
