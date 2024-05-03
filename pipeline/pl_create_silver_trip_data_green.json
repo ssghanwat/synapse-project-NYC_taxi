@@ -65,7 +65,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"ds_param_folder_path": {
-											"value": "silver/trip_data_green/year =@{item().year}/month =@{item().month}\n",
+											"value": "silver/trip_data_green/year=@{item().year}/month=@{item().month}\n",
 											"type": "Expression"
 										}
 									}
