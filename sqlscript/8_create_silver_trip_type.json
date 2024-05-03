@@ -1,5 +1,5 @@
 {
-	"name": "9_silver_trip_type",
+	"name": "8_create_silver_trip_type",
 	"properties": {
 		"folder": {
 			"name": "nyc_taxi/ldw"
