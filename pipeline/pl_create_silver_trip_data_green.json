@@ -48,7 +48,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Delete partitions",
+							"name": "Delete1",
 							"type": "Delete",
 							"dependsOn": [],
 							"policy": {
@@ -65,7 +65,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"ds_param_folder_path": {
-											"value": "silver/trip_data_green/year=@{item().year}/month=@{item().month}\n",
+											"value": "'silver/trip_data_green/year =@{item().year}/month =@{item().month}'",
 											"type": "Expression"
 										}
 									}
@@ -82,6 +82,11 @@
 				}
 			}
 		],
+		"variables": {
+			"file_year_month": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }
