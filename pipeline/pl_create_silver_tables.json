@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "foreeach folder path",
+				"name": "act_foreach_folder_path",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -15,7 +15,37 @@
 					"batchCount": 3,
 					"activities": [
 						{
-							"name": "act_delete_silver_taxi_zone_folder",
+							"name": "act create silver table",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "act_delete_silver_folder",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": {
+									"value": "@item().usp_name",
+									"type": "Expression"
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ls_serverless_sql_pool_nyc_taxi_ldw",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "act_delete_silver_folder",
 							"type": "Delete",
 							"dependsOn": [],
 							"policy": {
@@ -43,29 +73,6 @@
 									"recursive": true,
 									"enablePartitionDiscovery": false
 								}
-							}
-						},
-						{
-							"name": "act create silver taxi zone",
-							"type": "SqlServerStoredProcedure",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"storedProcedureName": {
-									"value": "@item().usp_name",
-									"type": "Expression"
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "ls_serverless_sql_pool_nyc_taxi_ldw",
-								"type": "LinkedServiceReference"
 							}
 						}
 					]
