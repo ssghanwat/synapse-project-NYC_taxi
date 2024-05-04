@@ -15,6 +15,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "taxi_data_green",
 				"folderPath": {
 					"value": "@dataset().ds_param_folder_path",
 					"type": "Expression"

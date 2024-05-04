@@ -1,0 +1,220 @@
+{
+	"name": "1_spark_create_gold_trip_data_green_agg",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "8fb9e10c-9daa-424d-a49c-755268fc94c7"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "python"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Trip Data Aggregation\r\n",
+					"#### Group by Columns\r\n",
+					"- year\r\n",
+					"- month\r\n",
+					"- Pickup Location ID\r\n",
+					"- Drop off Location ID\r\n",
+					"\r\n",
+					"## Aggregated Columns\r\n",
+					"- Total Trip Count\r\n",
+					"- Total Fare amount\r\n",
+					"\r\n",
+					"## Purpose of Notebook\r\n",
+					"Demonstrate the integration between spark pool and serverless sql pool\r\n",
+					"- Create the aggregated table in spark pool\r\n",
+					"- Access the data from serverless SQL Pool\r\n",
+					""
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"#set folder paths  \r\n",
+					"bronze_folder_path = 'abfss://nyc-taxi_data@synapseprojectdlgen2.dfs.core.windows.net/raw'\r\n",
+					"silver_folder_path = 'abfss://nyc-taxi_data@synapseprojectdlgen2.dfs.core.windows.net/silver'\r\n",
+					"gold_folder_path = 'abfss://nyc-taxi_data@synapseprojectdlgen2.dfs.core.windows.net/gold'"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"#set spark configuration to get datatypes  same as from file and not allow spark pool to infer data types\r\n",
+					"spark.conf.set(\"spark.sql.sources.partitionColumnTypeInference.enabled\", \"false\")"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					}
+				},
+				"source": [
+					"%%sql\r\n",
+					"--create database on which we are going to write the data\r\n",
+					"CREATE DATABASE IF NOT EXISTS nyc_taxi_ldw_spark\r\n",
+					"LOCATION 'abfss://nyc-taxi_data@synapseprojectdlgen2.dfs.core.windows.net/gold';"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"#read silver data to be processed \r\n",
+					"trip_data_green_df = spark.read.parquet(f\"{silver_folder_path}/trip_data_green\")"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"#perform the aggregations\r\n",
+					"#Total Trip Count\r\n",
+					"# Total fare amount\r\n",
+					"from pyspark.sql.functions import lit, count, sum\r\n",
+					"trip_data_green_agg_df = trip_data_green_df\\\r\n",
+					"                            .group by \"year\", \"month\", \"pu_location_id\", \"do_location_id\"\\\r\n",
+					"                            .agg(count(lit(1)).alias(\"total_trip_count\"),\r\n",
+					"                            round(sum(\"fare_amount\"),2).alias(\"total_fare_amount\"))"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"trip_data_green_agg_df.write.mode(\"overwrite\").format(\"parquet\")\\\r\n",
+					".partitionBy(\"month\", \"year\").saveAsTable(\"nyc_taxi_data_spark.trip_data_green_agg\")"
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
