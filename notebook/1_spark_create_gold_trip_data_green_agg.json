@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ba1c186e-a4ae-45a1-afbe-44fd45d53ab0"
+				"spark.autotune.trackingId": "39a174ad-75b5-4a04-98b0-5c47589d78d4"
 			}
 		},
 		"metadata": {
@@ -180,11 +180,11 @@
 					"# Total fare amount\r\n",
 					"from pyspark.sql.functions import lit, count, sum, round,col\r\n",
 					"trip_data_green_agg_df = trip_data_green_df\\\r\n",
-					"                            .groupBy (col(\"year\"), col(\"month\"), col(\"pu_location_id\"), col(\"do_location_id\"))\\\r\n",
+					"                            .groupBy (col(\"pu_location_id\"), col(\"do_location_id\"))\\\r\n",
 					"                            .agg(count(lit(1)).alias(\"total_trip_count\"),\r\n",
 					"                            round(sum(\"fare_amount\"),2).alias(\"total_fare_amount\"))"
 				],
-				"execution_count": 21
+				"execution_count": 22
 			},
 			{
 				"cell_type": "code",
@@ -203,7 +203,7 @@
 					"trip_data_green_agg_df.write.mode(\"overwrite\").format(\"parquet\")\\\r\n",
 					".partitionBy(\"month\", \"year\").saveAsTable(\"nyc_taxi_data_spark.trip_data_green_agg\")"
 				],
-				"execution_count": null
+				"execution_count": 23
 			}
 		]
 	}
