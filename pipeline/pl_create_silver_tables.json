@@ -20,7 +20,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"ds_param_folder_path": {
-								"value": "@variables('file_path')",
+								"value": "@variables('v_file_path')",
 								"type": "Expression"
 							}
 						}
@@ -53,10 +53,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": {
-						"value": "@variables('sp_name')",
-						"type": "Expression"
-					}
+					"storedProcedureName": "[silver].[usp_create_silver_taxi_zone]"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_serverless_sql_pool_nyc_taxi_ldw",
@@ -65,11 +62,11 @@
 			}
 		],
 		"variables": {
-			"file_path": {
+			"v_file_path": {
 				"type": "String",
 				"defaultValue": "silver/taxi_zone"
 			},
-			"sp_name": {
+			"v_sp_name": {
 				"type": "String",
 				"defaultValue": "silver.usp_silver_taxi_zone"
 			}
