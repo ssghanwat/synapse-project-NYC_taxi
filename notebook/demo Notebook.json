@@ -4,7 +4,7 @@
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
-			"referenceName": "synapsepool",
+			"referenceName": "projecctpool",
 			"type": "BigDataPoolReference"
 		},
 		"sessionProperties": {
@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "7cf5fd6f-a3b6-4649-a937-0e0d5989e746"
+				"spark.autotune.trackingId": "df28d799-4ffa-4d3e-ba48-261bd32bd481"
 			}
 		},
 		"metadata": {
@@ -31,10 +31,10 @@
 				"name": "python"
 			},
 			"a365ComputeOptions": {
-				"id": "/subscriptions/6985b325-9b0a-4419-839e-82b4baabcba6/resourceGroups/rg-synapse-project/providers/Microsoft.Synapse/workspaces/ws-synapse-project-udemy/bigDataPools/synapsepool",
-				"name": "synapsepool",
+				"id": "/subscriptions/6985b325-9b0a-4419-839e-82b4baabcba6/resourceGroups/rg-synapse-project/providers/Microsoft.Synapse/workspaces/ws-synapse-project-udemy/bigDataPools/projecctpool",
+				"name": "projecctpool",
 				"type": "Spark",
-				"endpoint": "https://ws-synapse-project-udemy.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/synapsepool",
+				"endpoint": "https://ws-synapse-project-udemy.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/projecctpool",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
@@ -53,7 +53,66 @@
 				"source": [
 					"x = 'hello'"
 				],
-				"execution_count": 1
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"x"
+				],
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%sql\r\n",
+					"select 1;"
+				],
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
 			}
 		]
 	}
