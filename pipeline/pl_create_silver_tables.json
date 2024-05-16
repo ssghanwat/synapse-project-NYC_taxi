@@ -1,5 +1,5 @@
 {
-	"name": "pl_create_silver_taxi_zone_usp",
+	"name": "pl_create_silver_tables",
 	"properties": {
 		"activities": [
 			{
@@ -16,8 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "ds_siver_taxi_zone",
-						"type": "DatasetReference"
+						"referenceName": "ds_nyc_taxi_data_dynamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_param_folder_path": {
+								"value": "@variables('v_folder_path')",
+								"type": "Expression"
+							}
+						}
 					},
 					"enableLogging": false,
 					"storeSettings": {
@@ -47,7 +53,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[silver].[usp_silver_taxi_zone]"
+					"storedProcedureName": {
+						"value": "@variables('v_usp_name')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_serverless_sql_pool_nyc_taxi_ldw",
@@ -55,6 +64,16 @@
 				}
 			}
 		],
+		"variables": {
+			"v_folder_path": {
+				"type": "String",
+				"defaultValue": "silver/taxi_zone"
+			},
+			"v_usp_name": {
+				"type": "String",
+				"defaultValue": "silver.usp_silver_taxi_zone"
+			}
+		},
 		"folder": {
 			"name": "demo"
 		},
