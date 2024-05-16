@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e467c349-99d9-4db1-80a7-e5b26e425db5"
+				"spark.autotune.trackingId": "865ee310-9dd3-45de-8d79-0d2c5cf25985"
 			}
 		},
 		"metadata": {
@@ -95,7 +95,7 @@
 					"silver_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/silver'\r\n",
 					"gold_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/gold'"
 				],
-				"execution_count": 2
+				"execution_count": 19
 			},
 			{
 				"cell_type": "code",
@@ -114,7 +114,7 @@
 					"#set spark configuration to get datatypes  same as from file and not allow spark pool to infer data types\r\n",
 					"spark.conf.set(\"spark.sql.sources.partitionColumnTypeInference.enabled\", \"false\")"
 				],
-				"execution_count": 3
+				"execution_count": 20
 			},
 			{
 				"cell_type": "code",
@@ -140,7 +140,7 @@
 					"LOCATION \"abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/gold\";\r\n",
 					"-- location \"https://synapseprojectdlgen2.dfs.core.windows.net/nyc-taxi-data/gold\";"
 				],
-				"execution_count": 4
+				"execution_count": 21
 			},
 			{
 				"cell_type": "code",
@@ -159,7 +159,26 @@
 					"#read silver data to be processed \r\n",
 					"trip_data_green_df = spark.read.parquet(f\"{silver_folder_path}/trip_data_green\")"
 				],
-				"execution_count": 14
+				"execution_count": 22
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": true
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"display(trip_data_green_df)"
+				],
+				"execution_count": 23
 			},
 			{
 				"cell_type": "code",
@@ -180,11 +199,11 @@
 					"# Total fare amount\r\n",
 					"from pyspark.sql.functions import lit, count, sum, round,col\r\n",
 					"trip_data_green_agg_df = trip_data_green_df\\\r\n",
-					"                            .groupBy (col(\"pu_location_id\"), col(\"do_location_id\"))\\\r\n",
+					"                            .groupBy (col(\"year \").alias(\"year\"), col(\"month \").alias(\"month\"), \"pu_location_id\", \"do_location_id\")\\\r\n",
 					"                            .agg(count(lit(1)).alias(\"total_trip_count\"),\r\n",
 					"                            round(sum(\"fare_amount\"),2).alias(\"total_fare_amount\"))"
 				],
-				"execution_count": 22
+				"execution_count": 33
 			},
 			{
 				"cell_type": "code",
@@ -201,9 +220,9 @@
 				},
 				"source": [
 					"trip_data_green_agg_df.write.mode(\"overwrite\").format(\"parquet\")\\\r\n",
-					".partitionBy(\"month\", \"year\").saveAsTable(\"nyc_taxi_data_spark.trip_data_green_agg\")"
+					".partitionBy(\"year\",\"month\").saveAsTable(\"nyc_taxi_ldw_spark.trip_data_green_agg\")"
 				],
-				"execution_count": 23
+				"execution_count": 36
 			}
 		]
 	}
