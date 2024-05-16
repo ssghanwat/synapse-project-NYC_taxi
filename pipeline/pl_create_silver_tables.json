@@ -116,10 +116,10 @@
 						"usp_name": "silver.usp_silver_payment_type"
 					}
 				]
+			},
+			"year": {
+				"type": "Array"
 			}
-		},
-		"folder": {
-			"name": "demo"
 		},
 		"annotations": []
 	}

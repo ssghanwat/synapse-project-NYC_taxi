@@ -215,9 +215,6 @@
 				"type": "Array"
 			}
 		},
-		"folder": {
-			"name": "demo"
-		},
 		"annotations": []
 	}
 }
