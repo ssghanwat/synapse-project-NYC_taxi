@@ -68,12 +68,6 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "act_Execute_silver_tables",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
 						"activity": "act_Execute_create_silver_trip_data_green",
 						"dependencyConditions": [
 							"Succeeded"
