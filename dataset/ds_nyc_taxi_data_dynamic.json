@@ -15,14 +15,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "taxi_data_green",
+				"fileName": "*",
 				"folderPath": {
 					"value": "@dataset().ds_param_folder_path",
 					"type": "Expression"
 				},
 				"fileSystem": "nyc-taxi-data"
 			},
-			"compressionCodec": "snappy"
+			"compressionCodec": "none"
 		},
 		"schema": []
 	}
