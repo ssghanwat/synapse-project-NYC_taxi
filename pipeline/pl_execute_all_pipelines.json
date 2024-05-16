@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "act_Execute_silver_table",
+				"name": "act_Execute_silver_tables",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
@@ -39,7 +39,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "act_Execute_silver_table",
+						"activity": "act_Execute_silver_tables",
 						"dependencyConditions": [
 							"Succeeded"
 						]
