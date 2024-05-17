@@ -4,20 +4,20 @@
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
-			"referenceName": "demo",
+			"referenceName": "projectpool",
 			"type": "BigDataPoolReference"
 		},
 		"sessionProperties": {
-			"driverMemory": "56g",
-			"driverCores": 8,
-			"executorMemory": "56g",
-			"executorCores": 8,
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
 			"numExecutors": 2,
 			"conf": {
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "255fc789-dea6-4f79-9b0d-d437bb19cbc0"
+				"spark.autotune.trackingId": "28614507-24b5-46ed-a8c6-533e91b3dc4b"
 			}
 		},
 		"metadata": {
@@ -31,12 +31,19 @@
 				"name": "python"
 			},
 			"a365ComputeOptions": {
-				"id": "/subscriptions/6985b325-9b0a-4419-839e-82b4baabcba6/resourceGroups/rg-synapse-project/providers/Microsoft.Synapse/workspaces/ws-synapse-project-udemy/bigDataPools/demo",
-				"name": "demo",
+				"id": "/subscriptions/6985b325-9b0a-4419-839e-82b4baabcba6/resourceGroups/rg-synapse-project/providers/Microsoft.Synapse/workspaces/ws-synapse-project-udemy/bigDataPools/projectpool",
+				"name": "projectpool",
+				"type": "Spark",
+				"endpoint": "https://ws-synapse-project-udemy.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/projectpool",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
-				}
+				},
+				"sparkVersion": "3.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -88,7 +95,7 @@
 					"silver_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/silver'\r\n",
 					"gold_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/gold'"
 				],
-				"execution_count": 1
+				"execution_count": 6
 			},
 			{
 				"cell_type": "code",
@@ -107,7 +114,7 @@
 					"#set spark configuration to get datatypes  same as from file and not allow spark pool to infer data types\r\n",
 					"spark.conf.set(\"spark.sql.sources.partitionColumnTypeInference.enabled\", \"false\")"
 				],
-				"execution_count": 12
+				"execution_count": 3
 			},
 			{
 				"cell_type": "code",
@@ -133,7 +140,7 @@
 					"LOCATION \"abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/gold\";\r\n",
 					"-- location \"https://synapseprojectdlgen2.dfs.core.windows.net/nyc-taxi-data/gold\";"
 				],
-				"execution_count": 13
+				"execution_count": 5
 			},
 			{
 				"cell_type": "code",
