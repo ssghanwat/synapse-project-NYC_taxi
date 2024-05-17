@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "28614507-24b5-46ed-a8c6-533e91b3dc4b"
+				"spark.autotune.trackingId": "0e69bc33-be79-42fc-a5fb-077f40340248"
 			}
 		},
 		"metadata": {
@@ -95,7 +95,7 @@
 					"silver_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/silver'\r\n",
 					"gold_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/gold'"
 				],
-				"execution_count": 6
+				"execution_count": 28
 			},
 			{
 				"cell_type": "code",
