@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "9684fe9b-9212-415a-beec-297f7b4117dd"
+				"spark.autotune.trackingId": "a9449c8f-ba87-4f2c-b999-3ebf242becad"
 			}
 		},
 		"metadata": {
@@ -95,7 +95,7 @@
 					"silver_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/silver'\r\n",
 					"gold_folder_path = 'abfss://nyc-taxi-data@synapseprojectdlgen2.dfs.core.windows.net/gold'"
 				],
-				"execution_count": 41
+				"execution_count": 3
 			},
 			{
 				"cell_type": "code",
@@ -114,7 +114,7 @@
 					"#set spark configuration to get datatypes  same as from file and not allow spark pool to infer data types\r\n",
 					"spark.conf.set(\"spark.sql.sources.partitionColumnTypeInference.enabled\", \"false\")"
 				],
-				"execution_count": 42
+				"execution_count": 2
 			},
 			{
 				"cell_type": "code",
